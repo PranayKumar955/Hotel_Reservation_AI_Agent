@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Booking Confirmed | HotelEase{% endblock %}
+{% block content %}
+<section class="confirmation panel">
+<div class="success-icon">✓</div><span class="eyebrow">RESERVATION CREATED</span><h1>You're all set, {{ name }}!</h1><p>Your demo booking has been confirmed. Save your booking reference to check or cancel this reservation.</p>
+<div class="reference"><span>BOOKING REFERENCE</span><strong>{{ ref }}</strong></div>
+<div class="confirmation-grid"><div><span>Room</span><strong>{{ room.room_type }} · {{ room.room_number }}</strong></div><div><span>Dates</span><strong>{{ check_in }} → {{ check_out }}</strong></div><div><span>Duration</span><strong>{{ nights }} night(s)</strong></div><div><span>Guests</span><strong>{{ guests }}</strong></div><div><span>Estimated total</span><strong>₹{{ "%.2f"|format(total) }}</strong></div></div>
+<a class="button" href="{{ url_for('booking_status') }}">Check booking status</a>
+</section>
+{% endblock %}

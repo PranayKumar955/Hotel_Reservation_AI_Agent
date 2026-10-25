@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Book a Room | HotelEase{% endblock %}
+{% block content %}
+<section class="page-heading"><span class="eyebrow">RESERVATION DETAILS</span><h1>Book your stay</h1><p>Complete your details to create a reservation.</p></section>
+<div class="form-layout">
+<article class="panel">
+<h2>Guest information</h2>
+<form method="post" class="stack-form">
+<input type="hidden" name="check_in" value="{{ check_in }}"><input type="hidden" name="check_out" value="{{ check_out }}"><input type="hidden" name="guests" value="{{ guests }}">
+<label>Full name<input name="guest_name" maxlength="100" required placeholder="Enter your full name"></label>
+<label>Email address<input type="email" name="email" maxlength="150" required placeholder="you@example.com"></label>
+<label>Phone number<input name="phone" type="tel" maxlength="25" required placeholder="Your contact number"></label>
+<button class="button" type="submit">Confirm reservation</button>
+</form>
+</article>
+<aside class="panel summary"><span class="eyebrow">YOUR ROOM</span><h2>{{ room.room_type }}</h2><p>Room {{ room.room_number }}</p><p>{{ room.description }}</p><hr><div class="summary-line"><span>Price per night</span><strong>₹{{ "%.0f"|format(room.price) }}</strong></div><div class="summary-line"><span>Dates</span><strong>{{ check_in or "Not selected" }} → {{ check_out or "Not selected" }}</strong></div><div class="summary-line"><span>Guests</span><strong>{{ guests }}</strong></div><p class="muted small">The total is calculated after validating the dates.</p></aside>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Room Availability | HotelEase{% endblock %}
+{% block content %}
+<section class="page-heading"><span class="eyebrow">PLAN YOUR STAY</span><h1>Find your perfect room</h1><p>Choose your dates and guest count to see rooms available for the entire stay.</p></section>
+<form class="search-panel" method="post">
+  <label>Check-in<input type="date" name="check_in" min="{{ today }}" value="{{ check_in }}" required></label>
+  <label>Check-out<input type="date" name="check_out" min="{{ today }}" value="{{ check_out }}" required></label>
+  <label>Guests<select name="guests">{% for n in range(1,7) %}<option value="{{ n }}" {% if guests|string == n|string %}selected{% endif %}>{{ n }} guest{% if n != 1 %}s{% endif %}</option>{% endfor %}</select></label>
+  <button class="button" type="submit">Search rooms</button>
+</form>
+{% if rooms %}
+<section class="section-heading"><div><h2>Available rooms</h2><p class="muted">{{ check_in }} to {{ check_out }} · {{ guests }} guest(s)</p></div></section>
+<div class="room-grid">
+{% for room in rooms %}
+<article class="room-card compact"><div class="room-visual visual-{{ loop.index }}"><span>{{ room.room_type }}</span><div class="room-window"></div><div class="room-bed"></div></div><div class="room-info"><div class="room-title"><h3>Room {{ room.room_number }}</h3><span class="capacity">Up to {{ room.capacity }}</span></div><p>{{ room.description }}</p><div class="room-bottom"><div><strong>₹{{ "%.0f"|format(room.price) }}</strong><span>/ night</span></div><a class="button button-small" href="{{ url_for('book', room_id=room.id, check_in=check_in, check_out=check_out, guests=guests) }}">Book now</a></div></div></article>
+{% endfor %}
+</div>
+{% endif %}
+{% endblock %}

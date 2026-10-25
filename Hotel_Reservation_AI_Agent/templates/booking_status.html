@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Booking Status | HotelEase{% endblock %}
+{% block content %}
+<section class="page-heading"><span class="eyebrow">YOUR RESERVATION</span><h1>Booking status</h1><p>Enter your booking reference and the email used during reservation.</p></section>
+<form class="panel status-form" method="post"><label>Booking reference<input name="booking_ref" required placeholder="HRA-XXXXXXXX"></label><label>Booking email<input type="email" name="email" required placeholder="you@example.com"></label><button class="button" type="submit">Find booking</button></form>
+{% if booking %}
+<section class="panel booking-result"><div class="result-top"><div><span class="eyebrow">BOOKING {{ booking.booking_ref }}</span><h2>{{ booking.room_type }} · Room {{ booking.room_number }}</h2></div><span class="status status-{{ booking.status|lower }}">{{ booking.status }}</span></div><div class="confirmation-grid"><div><span>Guest</span><strong>{{ booking.guest_name }}</strong></div><div><span>Dates</span><strong>{{ booking.check_in }} → {{ booking.check_out }}</strong></div><div><span>Guests</span><strong>{{ booking.guests }}</strong></div><div><span>Total</span><strong>₹{{ "%.2f"|format(booking.total_price) }}</strong></div></div>
+{% if booking.status == 'Confirmed' %}<form method="post" action="{{ url_for('cancel_booking') }}" onsubmit="return confirm('Cancel this booking?')"><input type="hidden" name="booking_ref" value="{{ booking.booking_ref }}"><input type="hidden" name="email" value="{{ booking.email }}"><button class="button button-danger" type="submit">Cancel booking</button></form>{% endif %}
+</section>
+{% endif %}
+{% endblock %}

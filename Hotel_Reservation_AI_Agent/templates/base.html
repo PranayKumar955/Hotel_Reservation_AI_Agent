@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}HotelEase | Hotel Reservation AI Agent{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">H</span> HotelEase <small>AI Reservation Agent</small></a>
+  <nav>
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('availability') }}">Availability</a>
+    <a href="{{ url_for('booking_status') }}">Booking Status</a>
+    <a href="{{ url_for('admin_dashboard') }}">Admin</a>
+  </nav>
+</header>
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-list">
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="footer">HotelEase · College project demo · Hotel Reservation AI Agent</footer>
+<button id="chat-toggle" class="chat-toggle" aria-label="Open chat">Chat with AI</button>
+<section id="chat-panel" class="chat-panel hidden" aria-label="Hotel assistant">
+  <div class="chat-head"><div><strong>HotelEase Assistant</strong><small>Ask about rooms and reservations</small></div><button id="chat-close" class="icon-button" aria-label="Close chat">×</button></div>
+  <div id="chat-messages" class="chat-messages"><div class="bubble bot">Hi! Ask me about room prices, availability, booking status, or check-in times.</div></div>
+  <form id="chat-form" class="chat-form"><input id="chat-input" maxlength="500" placeholder="Type your question..." autocomplete="off" required><button type="submit">Send</button></form>
+</section>
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>
